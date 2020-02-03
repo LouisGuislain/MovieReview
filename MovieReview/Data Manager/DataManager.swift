@@ -12,9 +12,9 @@ import SwiftyJSON
 
 class DataManager {
 
+    typealias MovieList = ([MovieListResult]?) -> Void
     
-    
-    func MovieTitleSearch(title: String) {
+    func MovieTitleSearch(title: String, onCompletion: @escaping MovieList) {
         
         let url = "http://www.omdbapi.com/?apikey=443bc5db&page=10&r=json&s=\(title)"
         
@@ -32,10 +32,11 @@ class DataManager {
                             let title = movieListDictionary["Title"] as? String ?? ""
                             let year = movieListDictionary["Year"] as? Int ?? 0
                             let poster = movieListDictionary["Poster"] as? String ?? ""
-                            
                             let movieList = MovieListResult(title: title, year: year, poster: poster)
+                            
                             return movieList
                         }
+                    onCompletion(movieListResult)
                     }
                 catch {
                     print("error")
@@ -59,10 +60,8 @@ class DataManager {
                 case .success(let value):
                     let json = JSON(value)
                     print("JSON: \(json)")
-    //return
                 case .failure(let error):
                     print(error)
-            //return
                 }
             })
         }

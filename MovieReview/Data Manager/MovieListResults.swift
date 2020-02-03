@@ -14,4 +14,8 @@ struct MovieListResult {
     let title: String
     let year: Int
     var poster: String
+    
+    var posterURL: NSURL {
+          return NSURL(string: poster)!
+      }
 }

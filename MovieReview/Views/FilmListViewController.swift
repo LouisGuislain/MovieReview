@@ -15,39 +15,44 @@ class MovieListViewController: UIViewController, UITableViewDelegate, UITableVie
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var movieListTableView: UITableView!
     
-    let dataManager = DataManager()
+    private let dataManager = DataManager()
+    private var movies: [MovieListResult] = []
     
     override func viewDidLoad() {
-//        let nib = UINib.init(nibName: "MovieListTableViewCell", bundle: nil)
-//        self.movieListTableView.register(nib, forCellReuseIdentifier: "MovieListTableViewCell")
         self.searchBar.delegate = self
 
     }
-    
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//        dataManager.MovieTitleSearch(title: searchBar.text ?? "")
-//        print("bite")
-//    }
 }
+
+
+
+
+
 
 extension MovieListViewController {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        dataManager.MovieTitleSearch(title: searchBar.text ?? "")
+        dataManager.MovieTitleSearch(title: searchBar.text ?? "", onCompletion: { (movieList: [MovieListResult]?)
+            -> Void in
+            self.movies = movieList!
+        })
+        print(">>>>>>>>>>>>>>>>>> \(movieListTableView.hasUncommittedUpdates)")
+        self.movieListTableView.reloadData()
         searchBar.resignFirstResponder()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt IndexPath: IndexPath) {
-//        dataManager.MovieTitleSearch(title: )
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+            return 25
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = movieListTableView.dequeueReusableCell(withIdentifier: "MovieListTableViewCell") as! MovieListTableViewCell
-        
+//        let posterData = try? Data(contentsOf: movies[indexPath.row].posterURL as URL)
+//        cell.posterImageView.image = UIImage(data: posterData!)
+//        cell.movieLabel.text = movies[indexPath.row].title
         return cell
     }
 }
