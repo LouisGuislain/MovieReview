@@ -20,7 +20,7 @@ class MovieListViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewDidLoad() {
         self.searchBar.delegate = self
-
+        
     }
 }
 
@@ -35,7 +35,6 @@ extension MovieListViewController {
             -> Void in
             self.movies = movieList!
         })
-        print(">>>>>>>>>>>>>>>>>> \(movieListTableView.hasUncommittedUpdates)")
         self.movieListTableView.reloadData()
         searchBar.resignFirstResponder()
     }

@@ -22,7 +22,7 @@ class DataManager {
             switch response.result {
             case.success(let value):
                 let json = JSON(value)
-                print("JSON: \(json)")
+                print("PRINT DU JSON DANS LE DATA MANAGER : \(json)")
                 do {
                     let resultsDictionnary = try JSONSerialization.jsonObject(with: response.data!, options: [.allowFragments]) as? [String: AnyObject]
                     guard let moviesContainer = resultsDictionnary!["Search"] as? [NSDictionary] else { return }
